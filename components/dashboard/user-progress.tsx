@@ -2,50 +2,12 @@
 
 import { Progress } from "@/components/ui/progress"
 import { Sparkles } from "lucide-react"
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useEffect, useState } from "react"
 
 export function UserProgress() {
   const [username, setUsername] = useState("ロード中...")
-  const supabase = createClientComponentClient()
-
   useEffect(() => {
-    async function loadUserData() {
-      try {
-        // 現在のユーザー情報を取得
-        const { data: { user } } = await supabase.auth.getUser()
-        
-        if (!user) {
-          console.error('User not found')
-          return
-        }
-        
-        // usersテーブルからユーザー情報を取得
-        const { data, error } = await supabase
-          .from('users')
-          .select('username')
-          .eq('id', user.id)
-          .single()
-        
-        if (error) {
-          console.error('Error fetching user data:', error)
-          return
-        }
-        
-        if (data) {
-          setUsername(data.username)
-        } else {
-          // プロファイルが見つからない場合はユーザーのメールアドレスの@前の部分を使用
-          const emailUsername = user.email?.split('@')[0] || 'ゲスト'
-          setUsername(emailUsername)
-        }
-      } catch (error) {
-        console.error('Error loading user data:', error)
-      }
-    }
-    
-    loadUserData()
-  }, [supabase])
+  }, [])
 
   return (
     <div className="bg-gray-900/50 backdrop-blur-sm rounded-xl border border-purple-900/30 p-6">

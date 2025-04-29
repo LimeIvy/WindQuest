@@ -3,16 +3,8 @@ import Link from "next/link"
 import { GameLogo } from "@/components/game-logo"
 import { GameFeatures } from "@/components/game-features"
 import { GameFooter } from "@/components/game-footer"
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
 
 export default async function Home() {
-  const cookieStore = cookies()
-  const supabase = createServerComponentClient({ cookies: () => cookieStore })
-  const { data: { session } } = await supabase.auth.getSession()
-
-  // 認証済みの場合はそのままダッシュボードへ、未認証の場合はログインページへリダイレクト
-  const startGamePath = session ? '/dashboard' : '/login?redirect=/dashboard'
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 via-purple-900 to-violet-900 flex flex-col">

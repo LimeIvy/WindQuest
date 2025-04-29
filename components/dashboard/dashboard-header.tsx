@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Button } from "@/components/ui/button"
 import { Bell, Menu, LogOut, X } from "lucide-react"
 import Link from "next/link"
@@ -13,24 +12,8 @@ import { toast } from "@/components/ui/use-toast"
 export function DashboardHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const router = useRouter()
-  const supabase = createClientComponentClient()
 
   const handleSignOut = async () => {
-    try {
-      await supabase.auth.signOut()
-      toast({
-        title: 'ログアウト成功',
-        description: 'トップページに戻ります',
-      })
-      router.push('/')
-    } catch (error) {
-      console.error('Sign out error:', error)
-      toast({
-        title: 'エラー',
-        description: 'ログアウト中に問題が発生しました',
-        variant: 'destructive',
-      })
-    }
   }
 
   return (
